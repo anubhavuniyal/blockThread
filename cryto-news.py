@@ -1,14 +1,36 @@
 import requests
+import argparse
 import sys
 import json
 from columnar import columnar
-from click import style
 
-parameters = {"data":"feeds","key":"rks643epq9onrriknr62w","symbol":"DOGE","limit":"10","sources":"twitter"}
+parser = argparse.ArgumentParser()
+group = parser.add_mutually_exclusive_group()
+group.add_argument("-d","--data",choices=["feeds","influencers","influencer"],help="Choose the type of data you want to see",default="feeds")
+group.add_argument("--coinoftheday",help="Display information about the current coin of the day")
+parser.add_argument("-k","--key",help="Your lunar api key")
+parser.add_argument("-s","--symbol",help="Details of a coin to display",default="BTC")
+parser.add_argument("-l","--limit",help="Number of data to show",default=10)
+parser.add_argument("--sources",choices=["twitter","reddit"],help="Sources to get the information from",default="twitter")
+args = parser.parse_args()
+
+data = args.data
+key = args.key
+symbol = args.symbol
+limit = args.limit
+sources=args.sources
+
+parameters = {"data":data,"key":key,"symbol":symbol,"limit":limit,"sources":sources}
+
 r = requests.get("https://api.lunarcrush.com/v2", params=parameters)
 
 if r.status_code != 200:
-    print("Connection not successful")
+    if r.status_code == 502:
+        print("Invalid symbol entered")
+    elif r.status_code == 401:
+        print("API key invalid or expired")
+    else:
+        print("Connection not successful")
     sys.exit()
 
 json_response = r.json()
@@ -29,10 +51,19 @@ for influencer_data in list_of_dictionary_data:
             data_data.append(influencer_data[data])
         if data == 'url':
             data_data.append(influencer_data[data])
-        if data=='body':
-            data_data.append(influencer_data[data])
+        if data=='body' or data=='title':
+            if sources == 'reddit':
+                if data=='body':
+                    pass
+                else:
+                    data_data.append(influencer_data[data])
+            else:
+                data_data.append(influencer_data[data])
 
     data_list.append(data_data)
-headers = ["Influence","Tweet","Tweet URL","Name","Twitter Handle"]
-table = columnar(data_list,headers)
+if sources == 'twitter':
+    headers = ["Influence","Tweet","Tweet URL","Name","Twitter Handle"]
+else:
+    headers = ["Influence","Title","Url"]
+table = columnar(data_list,headers,no_borders=True)
 print(table)
