@@ -2,7 +2,7 @@
 
 This python program makes use of the [LunarCRUSH API](https://lunarcrush.com/developers/docs) and [Messari API](https://messari.io/api) to show data about different crypto-currencies, like tweets by influencer\[s\], market changes in a currency using a graph based solution and currently best performing currency. 
 
-##Usage
+## Usage
 
 ```bash
 git clone https://github.com/equiknoxx/blockThread
@@ -19,7 +19,7 @@ chmod +x crypto-news.py
 ./crypto-news.py -d price-ticker -s doge
 ```
 
-##ToDo
+## ToDo
 + Ability to specify time interval for the price ticker(Currrently shows the last 30 days changes)
 + Store api key in a file
 + Add more functionality
