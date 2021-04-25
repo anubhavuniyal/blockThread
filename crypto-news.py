@@ -69,13 +69,23 @@ if data == "price-ticker":
             x.append(day)
             day+=1
 
-        axis[p1].plot(x,o_y,label="Opening value")
-        axis[p1].plot(x,h_y,label="Highest value")
-        axis[p1].plot(x,l_y,label="Lowest value")
-        axis[p1].plot(x,c_y,label="Closing value")
-        axis[p1].legend()
-        axis[p1].set_title(f"{symbol} price ticker")
-        p1+=1
+        if number_of_arguments > 1:
+            axis[p1].plot(x,o_y,label="Opening value")
+            axis[p1].plot(x,h_y,label="Highest value")
+            axis[p1].plot(x,l_y,label="Lowest value")
+            axis[p1].plot(x,c_y,label="Closing value")
+            axis[p1].legend()
+            axis[p1].set_title(f"{symbol} price ticker")
+            p1+=1
+        else:
+            plt.plot(x,o_y,label="Opening value")
+            plt.plot(x,h_y,label="Highest value")
+            plt.plot(x,l_y,label="Lowest value")
+            plt.plot(x,c_y,label="Closing value")
+            plt.legend()
+            plt.xlabel(f"From {start} to {end}")
+            plt.ylabel("Price changes")
+            plt.title(f"{symbol} price ticker")
     
     plt.show()
     sys.exit(0)
