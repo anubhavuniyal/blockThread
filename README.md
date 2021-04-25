@@ -8,6 +8,7 @@ This python program makes use of the [LunarCRUSH API](https://lunarcrush.com/dev
 git clone https://github.com/equiknoxx/blockThread
 cd blockThread
 chmod +x crypto-news.py
+python3 -m pip install -r requirements.txt
 ./crypto-news.py -h
 ```
 
