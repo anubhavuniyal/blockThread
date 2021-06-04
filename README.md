@@ -21,7 +21,7 @@ python3 -m pip install -r requirements.txt
 ```
 
 ## ToDo
-+ Ability to specify time interval for the price ticker(Currrently shows the last 30 days changes)
++ ~~Ability to specify time interval for the price ticker(Currrently shows the last 30 days changes)
 + Store api key in a file
 + Add more functionality
 + Better documentation
